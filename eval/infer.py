@@ -106,7 +106,7 @@ def _run_interpolator() -> None:
                 if _HALF_FRAME.value:
                     fill_value = 0.5
                 else:
-                    fill_value = (i / (num_intermediary_frames + 1),)
+                    fill_value = (i + 1) / (num_intermediary_frames + 1)
                 batch_dt = np.full(
                     shape=(1,),
                     fill_value=fill_value,

@@ -37,6 +37,11 @@ from tqdm import tqdm
 _DIR = flags.DEFINE_string(
     name="dir", default="./data/output_frames", help="The directory path of frames"
 )
+_HALF_FRAME = flags.DEFINE_bool(
+    name="half_frame",
+    default=False,
+    help="force a single midframe, exactly halfway between two frames",
+)
 _MODEL_PATH = flags.DEFINE_string(
     name="model_path",
     default="./pretrained_models/film_net/Style/saved_model",
@@ -98,8 +103,10 @@ def _run_interpolator() -> None:
                 print(i, prev_file_path, file_path)
 
                 # Batched time.
-                # fill_value = (i / (num_intermediary_frames + 1),)
-                fill_value = 0.5
+                if _HALF_FRAME.value:
+                    fill_value = 0.5
+                else:
+                    fill_value = (i / (num_intermediary_frames + 1),)
                 batch_dt = np.full(
                     shape=(1,),
                     fill_value=fill_value,

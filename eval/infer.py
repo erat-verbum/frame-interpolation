@@ -98,9 +98,11 @@ def _run_interpolator() -> None:
                 print(i, prev_file_path, file_path)
 
                 # Batched time.
+                # fill_value=i / (num_intermediary_frames + 1),
+                fill_value = 0.5
                 batch_dt = np.full(
                     shape=(1,),
-                    fill_value=i / (num_intermediary_frames + 1),
+                    fill_value=fill_value,
                     dtype=np.float32,
                 )
 
